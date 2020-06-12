@@ -26,8 +26,9 @@ class Gitbook {
       fsPromises.access(fileName)
         .then(() => {
           this.showDoc(fileName)
-        }).catch(() => {
-          return fsPromises.writeFile(fileName, '')
+        }).catch(async () => {
+          await fsPromises.mkdir(path.dirname(fileName), { recursive: true })
+          await fsPromises.writeFile(fileName, '')
         }).then(() => {
           this.showDoc(fileName)
         }).catch(() => {
